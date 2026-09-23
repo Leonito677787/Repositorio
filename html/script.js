@@ -556,4 +556,290 @@ document.addEventListener("DOMContentLoaded", () => {
         "Our Path | Sistema JavaScript cargado correctamente."
     );
 
+    /* =========================================================
+   MODALES — LOGIN / REGISTRO
+   SOLO INTERFAZ FRONTAL
+   ========================================================= */
+
+    function initAuthModals() {
+
+        const openButtons =
+            document.querySelectorAll(
+                "[data-modal-open]"
+            );
+
+        const closeButtons =
+            document.querySelectorAll(
+                "[data-modal-close]"
+            );
+
+        const modalOverlays =
+            document.querySelectorAll(
+                ".modal-overlay"
+            );
+
+
+        /* =====================================================
+        ABRIR MODAL
+        ===================================================== */
+
+        function openModal(modalId) {
+
+            const modal =
+                document.getElementById(modalId);
+
+            if (!modal) return;
+
+
+            modalOverlays.forEach(item => {
+
+                item.classList.remove(
+                    "is-open"
+                );
+
+                item.setAttribute(
+                    "aria-hidden",
+                    "true"
+                );
+
+            });
+
+
+            modal.classList.add(
+                "is-open"
+            );
+
+            modal.setAttribute(
+                "aria-hidden",
+                "false"
+            );
+
+
+            document.body.classList.add(
+                "modal-open"
+            );
+
+
+            const firstInput =
+                modal.querySelector(
+                    "input"
+                );
+
+
+            setTimeout(() => {
+
+                if (firstInput) {
+                    firstInput.focus();
+                }
+
+            }, 250);
+        }
+
+
+        /* =====================================================
+        CERRAR MODAL
+        ===================================================== */
+
+        function closeModal(modal) {
+
+            if (!modal) return;
+
+
+            modal.classList.remove(
+                "is-open"
+            );
+
+            modal.setAttribute(
+                "aria-hidden",
+                "true"
+            );
+
+
+            document.body.classList.remove(
+                "modal-open"
+            );
+        }
+
+
+        /* =====================================================
+        BOTONES PARA ABRIR
+        ===================================================== */
+
+        openButtons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const modalId =
+                        button.dataset.modalOpen;
+
+                    openModal(modalId);
+
+                }
+            );
+
+        });
+
+
+        /* =====================================================
+        BOTONES PARA CERRAR
+        ===================================================== */
+
+        closeButtons.forEach(button => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    const modal =
+                        button.closest(
+                            ".modal-overlay"
+                        );
+
+                    closeModal(modal);
+
+                }
+            );
+
+        });
+
+
+        /* =====================================================
+        CLICK FUERA DE LA VENTANA
+        ===================================================== */
+
+        modalOverlays.forEach(overlay => {
+
+            overlay.addEventListener(
+                "click",
+                event => {
+
+                    if (
+                        event.target === overlay
+                    ) {
+
+                        closeModal(
+                            overlay
+                        );
+
+                    }
+
+                }
+            );
+
+        });
+
+
+        /* =====================================================
+        CAMBIAR ENTRE LOGIN / REGISTRO
+        ===================================================== */
+
+        document
+            .querySelectorAll(
+                "[data-switch-modal]"
+            )
+            .forEach(button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        const targetModal =
+                            button.dataset
+                                .switchModal;
+
+                        openModal(
+                            targetModal
+                        );
+
+                    }
+                );
+
+            });
+
+
+        /* =====================================================
+        ESC PARA CERRAR
+        ===================================================== */
+
+        document.addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key !== "Escape"
+                ) {
+                    return;
+                }
+
+
+                const activeModal =
+                    document.querySelector(
+                        ".modal-overlay.is-open"
+                    );
+
+
+                if (activeModal) {
+
+                    closeModal(
+                        activeModal
+                    );
+
+                }
+
+            }
+        );
+
+
+        /* =====================================================
+        FORMULARIOS — SOLO DEMOSTRACIÓN
+        NO ENVÍA INFORMACIÓN
+        ===================================================== */
+
+        document
+            .querySelectorAll(
+                ".auth-form"
+            )
+            .forEach(form => {
+
+                form.addEventListener(
+                    "submit",
+                    event => {
+
+                        event.preventDefault();
+
+
+                        const button =
+                            form.querySelector(
+                                ".submit-button"
+                            );
+
+
+                        if (!button) return;
+
+
+                        const original =
+                            button.innerHTML;
+
+
+                        button.innerHTML =
+                            'DEMO VISUAL <span>✓</span>';
+
+
+                        setTimeout(() => {
+
+                            button.innerHTML =
+                                original;
+
+                        }, 1200);
+
+                    }
+                );
+
+            });
+
+    }
+        
+
 });

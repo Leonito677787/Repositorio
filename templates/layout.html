@@ -36,6 +36,24 @@
                 <a class="nav-link" href="#marketplace">Marketplace</a>
                 <a class="nav-link" href="#comunidad">Comunidad</a>
                 <a class="nav-cta" href="#archivo">Explorar archivo</a>
+
+                <!-- AUTENTICACIÓN -->
+                <div class="nav-auth">
+
+            <button
+                class="auth-button auth-login"
+                type="button"
+                data-modal-open="loginModal">
+                Iniciar sesión
+            </button>
+
+            <button
+                class="auth-button auth-register"
+                type="button"
+                data-modal-open="registerModal">
+                Registrarse
+            </button>
+                </div>
             </div>
         </nav>
     </header>
@@ -625,10 +643,316 @@
             <span>BUILT FOR THE PATH / OP_001</span>
         </div>
     </footer>
+    <!--MODAL — INICIAR SESIÓN-->
+    <div
+        class="modal-overlay"
+        id="loginModal"
+        aria-hidden="true">
+
+        <div
+            class="auth-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="loginTitle">
+
+            <button
+                class="modal-close"
+                type="button"
+                data-modal-close
+                aria-label="Cerrar ventana">
+                ×
+            </button>
+
+            <div class="modal-header">
+
+                <span class="modal-code">
+                    OP // ACCESS 001
+                </span>
+
+                <div class="modal-logo">
+                    OP
+                </div>
+
+                <h2 id="loginTitle">
+                    Bienvenido de nuevo.
+                </h2>
+
+                <p>
+                    Accede a tu espacio dentro del archivo.
+                </p>
+
+            </div>
+
+            <form
+                class="auth-form"
+                action="#"
+                novalidate>
+
+                <label for="loginEmail">
+                    Correo electrónico
+                </label>
+
+                <div class="input-shell">
+
+                    <span>@</span>
+
+                    <input
+                        id="loginEmail"
+                        type="email"
+                        placeholder="tu@email.com"
+                        autocomplete="email">
+
+                </div>
+
+
+                <label for="loginPassword">
+                    Contraseña
+                </label>
+
+                <div class="input-shell">
+
+                    <span>◆</span>
+
+                    <input
+                        id="loginPassword"
+                        type="password"
+                        placeholder="••••••••"
+                        autocomplete="current-password">
+
+                </div>
+
+
+                <div class="form-row">
+
+                    <label class="check-label">
+
+                        <input type="checkbox">
+
+                        <span>
+                            Recordarme
+                        </span>
+
+                    </label>
+
+                    <a
+                        href="#"
+                        class="form-link">
+
+                        ¿Olvidaste tu contraseña?
+
+                    </a>
+
+                </div>
+
+
+                <button
+                    class="submit-button"
+                    type="submit">
+
+                    ENTRAR AL ARCHIVO
+
+                    <span>→</span>
+
+                </button>
+
+
+                <p class="switch-auth">
+
+                    ¿Aún no tienes cuenta?
+
+                    <button
+                        type="button"
+                        data-switch-modal="registerModal">
+
+                        Regístrate
+
+                    </button>
+
+                </p>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!--MODAL — REGISTRO-->
+    <div
+        class="modal-overlay"
+        id="registerModal"
+        aria-hidden="true">
+
+        <div
+            class="auth-modal register-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="registerTitle">
+
+            <button
+                class="modal-close"
+                type="button"
+                data-modal-close
+                aria-label="Cerrar ventana">
+
+                ×
+
+            </button>
+
+
+            <div class="modal-header">
+
+                <span class="modal-code">
+                    OP // NEW USER 002
+                </span>
+
+                <div class="modal-logo">
+                    OP
+                </div>
+
+                <h2 id="registerTitle">
+                    Forma parte del archivo.
+                </h2>
+
+                <p>
+                    Crea tu perfil de coleccionista en Our Path.
+                </p>
+
+            </div>
+
+
+            <form
+                class="auth-form"
+                action="#"
+                novalidate>
+
+
+                <div class="form-grid">
+
+                    <div>
+
+                        <label for="registerName">
+                            Nombre
+                        </label>
+
+                        <div class="input-shell">
+
+                            <span>◈</span>
+
+                            <input
+                                id="registerName"
+                                type="text"
+                                placeholder="Tu nombre"
+                                autocomplete="given-name">
+
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="registerUser">
+                            Usuario
+                        </label>
+
+                        <div class="input-shell">
+
+                            <span>OP</span>
+
+                            <input
+                                id="registerUser"
+                                type="text"
+                                placeholder="@usuario"
+                                autocomplete="username">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <label for="registerEmail">
+                    Correo electrónico
+                </label>
+
+                <div class="input-shell">
+
+                    <span>@</span>
+
+                    <input
+                        id="registerEmail"
+                        type="email"
+                        placeholder="tu@email.com"
+                        autocomplete="email">
+
+                </div>
+
+
+                <label for="registerPassword">
+                    Contraseña
+                </label>
+
+                <div class="input-shell">
+
+                    <span>◆</span>
+
+                    <input
+                        id="registerPassword"
+                        type="password"
+                        placeholder="Crea una contraseña"
+                        autocomplete="new-password">
+
+                </div>
+
+
+                <label class="check-label terms">
+
+                    <input type="checkbox">
+
+                    <span>
+                        Acepto los términos y condiciones
+                        de Our Path.
+                    </span>
+
+                </label>
+
+
+                <button
+                    class="submit-button"
+                    type="submit">
+
+                    CREAR PERFIL
+
+                    <span>→</span>
+
+                </button>
+
+
+                <p class="switch-auth">
+
+                    ¿Ya tienes cuenta?
+
+                    <button
+                        type="button"
+                        data-switch-modal="loginModal">
+
+                        Inicia sesión
+
+                    </button>
+
+                </p>
+
+            </form>
+
+        </div>
+
+    </div>
 
     <script src="js/script.js"></script>
-    <script src="{{ url for('static',filename='Js/bootstrap.bundle.js) }}"></script>
-    <script src="{{ url for('static',filename='Js/all.min.js") }}></script>  
-    <script src="{{ url for('static',filename='Js/.script.js') }}"></script>
+    <script src="{{ url_for('static', filename='Js/bootstrap.bundle.js) }}"></script>
+    <script src="{{ url_for('static', filename='Js/all.min.js") }}></script>  
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

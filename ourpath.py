@@ -3,10 +3,22 @@ from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from config import config
 from werkzeug.security import generate_password_hash
+from models.entities.User import User
+from models.ModelUser import ModelUser
+
 
 ourpathApp = Flask(__name__)
 ourpathApp.config.from_object(config['development'])
 db         = MySQL(ourpathApp) 
+adminUsuarios = LoginManager(ourpathApp)
+
+@adminUsuarios.user_loader
+def load_user(id):
+    return ModelUser.get_by_id(db, id)
+
+@ourpathApp.route('/')
+def home():
+    return render_template('home.html')
 
 @ourpathApp.route('/')
 def home():
@@ -23,6 +35,22 @@ def signup():
         db.connection.commit()
         regUsuario.close()
         return redirect(url_for('home'))
+
+    return redirect(url_for('home'))
+
+@ourpathApp.route('/signin', methods=['GET','POST'])
+def signin():
+    if request.method=='POST':
+        usuario = User(0, '', request.form['correo'], request.form['clave'])
+        usuarioAutenticado = ModelUser.login(db, usuario)
+        if usuarioAutenticado is not None:
+            login_user(usuarioAutenticado)
+            if usuarioAutenticado.perfil == 'A':
+                return render_template('admin.html')
+            else:
+                return render_template('user.html')
+        else:
+            render_template('home.html')
 
 if __name__== '__main__':
     ourpathApp.run(port=8787)
