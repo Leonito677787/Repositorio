@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from config import config
@@ -23,6 +23,8 @@ def home():
 @ourpathApp.route('/')
 def home():
     return render_template('home.html')
+
+
 @ourpathApp.route('/signup', methods=['GET','POST'])
 def signup():
     if request.method=='POST':
@@ -38,19 +40,30 @@ def signup():
 
     return redirect(url_for('home'))
 
+
 @ourpathApp.route('/signin', methods=['GET','POST'])
 def signin():
     if request.method=='POST':
-        usuario = User(0, '', request.form['correo'], request.form['clave'])
-        usuarioAutenticado = ModelUser.login(db, usuario)
+        usuario = User(0, None, request.form['correo'], request.form['clave'], None)
+        usuarioAutenticado = ModelUser.signin(db, usuario)
         if usuarioAutenticado is not None:
             login_user(usuarioAutenticado)
-            if usuarioAutenticado.perfil == 'A':
-                return render_template('admin.html')
+            if usuarioAutenticado.clave:
+                if usuarioAutenticado.perfil == 'A':
+                    return render_template('admin.html')
+                else:
+                    return render_template('user.html')
             else:
-                return render_template('user.html')
+                flash('Contraseña incorrecta')
+                redirect(url_for('home'))
+
         else:
-            render_template('home.html')
+            flash('Usuario no encontrado')
+            redirect(url_for('home'))
+    else:
+        render_template('home.html')   
+
+
 
 if __name__== '__main__':
     ourpathApp.run(port=8787)

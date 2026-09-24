@@ -685,7 +685,8 @@
 
             <form
                 class="auth-form"
-                action="#"
+                action="{{url_for('signin')}}" 
+                method="post"
                 novalidate>
 
                 <label for="loginEmail">
@@ -698,7 +699,7 @@
 
                     <input
                         id="loginEmail"
-                        type="email"
+                        type="correo"
                         placeholder="tu@email.com"
                         autocomplete="email">
 
@@ -716,6 +717,7 @@
                     <input
                         id="loginPassword"
                         type="password"
+                        name="clave"
                         placeholder="••••••••"
                         autocomplete="current-password">
 
