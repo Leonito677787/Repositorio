@@ -7,15 +7,11 @@
     <meta name="theme-color" content="#000500">
     <title>Our Path | Explora la historia de los videojuegos</title>
 
-    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/css/all.min.css">
-    <link rel="stylesheet" href="/static/css/style.css">
-    <link rel="stylesheet" href="/static/Js/script.js">
-    
-    
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/all.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static',filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
@@ -46,6 +42,15 @@
                 <a class="nav-link" href="#marketplace">Marketplace</a>
                 <a class="nav-link" href="#comunidad">Comunidad</a>
                 <a class="nav-cta" href="#archivo">Explorar archivo</a>
+
+                <div class="nav-auth">
+                    <button type="button" class="auth-button auth-login" data-modal-open="modalLogin">
+                        Iniciar sesión
+                    </button>
+                    <button type="button" class="auth-button auth-register" data-modal-open="modalRegister">
+                        Registrarse
+                    </button>
+                </div>
             </div>
         </nav>
     </header>
@@ -636,6 +641,113 @@
         </div>
     </footer>
 
-    <script src="js/script.js"></script>
+    <!-- MODAL: LOGIN -->
+    <div class="modal-overlay" id="modalLogin" aria-hidden="true">
+        <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+            <button type="button" class="modal-close" data-modal-close aria-label="Cerrar ventana">&times;</button>
+
+            <div class="modal-header">
+                <span class="modal-code">OP_LOGIN / ACCESS</span>
+                <div class="modal-logo">OP</div>
+                <h2 id="loginTitle">Bienvenido de vuelta</h2>
+                <p>Ingresa a tu cuenta para continuar tu camino.</p>
+            </div>
+
+            <form class="auth-form" novalidate>
+                <label for="loginEmail">Correo electrónico</label>
+                <div class="input-shell">
+                    <span>@</span>
+                    <input type="email" id="loginEmail" name="email" placeholder="tucorreo@ejemplo.com" required>
+                </div>
+
+                <label for="loginPassword">Contraseña</label>
+                <div class="input-shell">
+                    <span>*</span>
+                    <input type="password" id="loginPassword" name="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-row">
+                    <label class="check-label">
+                        <input type="checkbox" name="remember">
+                        Recordarme
+                    </label>
+                    <a class="form-link" href="#">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    INICIAR SESIÓN <span aria-hidden="true">→</span>
+                </button>
+
+                <p class="switch-auth">
+                    ¿Aún no tienes cuenta?
+                    <button type="button" data-switch-modal="modalRegister">Regístrate aquí</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: REGISTRO -->
+    <div class="modal-overlay" id="modalRegister" aria-hidden="true">
+        <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+            <button type="button" class="modal-close" data-modal-close aria-label="Cerrar ventana">&times;</button>
+
+            <div class="modal-header">
+                <span class="modal-code">OP_REGISTER / NEW ARCHIVE</span>
+                <div class="modal-logo">OP</div>
+                <h2 id="registerTitle">Únete al camino</h2>
+                <p>Crea tu cuenta y comienza tu propia colección.</p>
+            </div>
+
+            <form class="auth-form" novalidate>
+                <div class="form-grid">
+                    <div>
+                        <label for="registerName">Nombre</label>
+                        <div class="input-shell">
+                            <span>#</span>
+                            <input type="text" id="registerName" name="name" placeholder="Tu nombre" required>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="registerUsername">Usuario</label>
+                        <div class="input-shell">
+                            <span>@</span>
+                            <input type="text" id="registerUsername" name="username" placeholder="usuario" required>
+                        </div>
+                    </div>
+                </div>
+
+                <label for="registerEmail">Correo electrónico</label>
+                <div class="input-shell">
+                    <span>@</span>
+                    <input type="email" id="registerEmail" name="email" placeholder="tucorreo@ejemplo.com" required>
+                </div>
+
+                <label for="registerPassword">Contraseña</label>
+                <div class="input-shell">
+                    <span>*</span>
+                    <input type="password" id="registerPassword" name="password" placeholder="••••••••" required>
+                </div>
+
+                <div class="form-row terms">
+                    <label class="check-label">
+                        <input type="checkbox" name="terms" required>
+                        Acepto los términos y la política de privacidad
+                    </label>
+                </div>
+
+                <button type="submit" class="submit-button">
+                    CREAR CUENTA <span aria-hidden="true">→</span>
+                </button>
+
+                <p class="switch-auth">
+                    ¿Ya tienes cuenta?
+                    <button type="button" data-switch-modal="modalLogin">Inicia sesión</button>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>

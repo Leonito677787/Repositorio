@@ -840,6 +840,8 @@ document.addEventListener("DOMContentLoaded", () => {
             });
 
     }
-        
+
+    // Se ejecuta la inicialización de los modales de autenticación
+    initAuthModals();
 
 });

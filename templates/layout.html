@@ -58,7 +58,13 @@
         </nav>
     </header>
 
-    <main>
+    {% if current_user.is_authenticated and current_user.perfil == 'A' %}
+    {% include 'components/navbar_admin.html' %}
+    {% else %}
+    {% include 'components/navbar.html' %}
+    {% endif %}
+
+    <main id="top">
         <!-- HERO -->
         <section class="hero section" aria-labelledby="hero-title">
             <div class="hero-grid">

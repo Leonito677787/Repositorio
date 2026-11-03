@@ -50,9 +50,9 @@ def signin():
             login_user(usuarioAutenticado)
             if usuarioAutenticado.clave:
                 if usuarioAutenticado.perfil == 'A':
-                    return render_template('admin.html')
+                    return redirect(url_for('home_admin'))
                 else:
-                    return render_template('user.html')
+                    return redirect(url_for('home_user'))
             else:
                 flash('Contraseña incorrecta')
                 redirect(url_for('home'))
@@ -63,7 +63,19 @@ def signin():
     else:
         render_template('home.html')   
 
+@ourpathApp.route('/signout', methods=['GET','POST'])
+def signout():
+    logout_user()
+    return redirect(url_for('home'))
 
+@ourpathApp.route('/home_admin', methods=['GET','POST'])
+@login_required
+def home_admin():
+    return render_template('admin.html')
 
+@ourpathApp.route('/home_user', methods=['GET','POST'])
+@login_required
+def home_user():
+    return render_template('user.html')
 if __name__== '__main__':
     ourpathApp.run(port=8787)
