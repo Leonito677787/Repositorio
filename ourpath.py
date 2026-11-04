@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, flash, url_for, config
+from flask import Flask, render_template, request, redirect, flash, url_for, flash
 from flask_mysqldb import MySQL
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from config import config
@@ -13,52 +13,46 @@ db         = MySQL(ourpathApp)
 adminUsuarios = LoginManager(ourpathApp)
 
 @adminUsuarios.user_loader
-def load_user(id):
+def agregarUsuario(id):
     return ModelUser.get_by_id(db, id)
 
 @ourpathApp.route('/')
 def home():
     return render_template('home.html')
 
-@ourpathApp.route('/')
-def home():
-    return render_template('home.html')
-
-
 @ourpathApp.route('/signup', methods=['GET','POST'])
 def signup():
-    if request.method=='POST':
+     if request.method == 'POST':
         nombre = request.form['nombre']
         correo = request.form['correo']
-        clave = request.form['clave']
+        clave   = request.form['clave']
         claveCifrada = generate_password_hash(clave)
-        regUsuario = db.connection.cursor() 
-        regUsuario.execute("INSERT INTO usuarios (nombre, correo, clave) VALUES (%s, %s, %s)", (nombre, correo, claveCifrada))
+        regUsuario = db.connection.cursor()
+        regUsuario.execute("INSERT INTO usuario (nombre,correo,clave) VALUES (%s, %s, %s)", (nombre,correo,claveCifrada))
+
         db.connection.commit()
         regUsuario.close()
         return redirect(url_for('home'))
 
-    return redirect(url_for('home'))
 
 
 @ourpathApp.route('/signin', methods=['GET','POST'])
 def signin():
-    if request.method=='POST':
-        usuario = User(0, None, request.form['correo'], request.form['clave'], None)
-        usuarioAutenticado = ModelUser.signin(db, usuario)
+    if request.method == 'POST':
+        usuario = User(0,None,request.form['correo'],request.form['clave'], None)
+        usuarioAutenticado = ModelUser.signin(db,usuario)
         if usuarioAutenticado is not None:
-            login_user(usuarioAutenticado)
             if usuarioAutenticado.clave:
+                login_user(usuarioAutenticado)
                 if usuarioAutenticado.perfil == 'A':
-                    return redirect(url_for('home_admin'))
+                    return redirect (url_for('home_admin'))
                 else:
-                    return redirect(url_for('home_user'))
+                    return redirect (url_for('home_user'))
             else:
-                flash('Contraseña incorrecta')
+                flash('Contraseña Incorrecta')
                 redirect(url_for('home'))
-
         else:
-            flash('Usuario no encontrado')
+            flash('Usuario inexistente')
             redirect(url_for('home'))
     else:
         render_template('home.html')   

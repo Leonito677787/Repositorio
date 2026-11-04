@@ -583,57 +583,133 @@ document.addEventListener("DOMContentLoaded", () => {
         ABRIR MODAL
         ===================================================== */
 
-        function openModal(modalId) {
+            function initAuthModals() {
 
-            const modal =
-                document.getElementById(modalId);
+    const openButtons = document.querySelectorAll("[data-modal-open]");
+    const closeButtons = document.querySelectorAll("[data-modal-close]");
+    const modalOverlays = document.querySelectorAll(".modal-overlay");
 
-            if (!modal) return;
+    function openModal(modalId) {
 
+        const modal = document.getElementById(modalId);
 
-            modalOverlays.forEach(item => {
+        if (!modal) {
+            console.warn("No se encontró el modal:", modalId);
+            return;
+        }
 
-                item.classList.remove(
-                    "is-open"
-                );
+        modalOverlays.forEach(item => {
+            item.classList.remove("is-open");
+            item.setAttribute("aria-hidden", "true");
+        });
 
-                item.setAttribute(
-                    "aria-hidden",
-                    "true"
-                );
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
 
-            });
+        document.body.classList.add("modal-open");
 
+        const firstInput = modal.querySelector("input");
 
-            modal.classList.add(
-                "is-open"
+        if (firstInput) {
+            firstInput.focus();
+        }
+    }
+
+    function closeModal(modal) {
+
+        if (!modal) return;
+
+        modal.classList.remove("is-open");
+        modal.setAttribute("aria-hidden", "true");
+
+        const anotherModalOpen = document.querySelector(
+            ".modal-overlay.is-open"
+        );
+
+        if (!anotherModalOpen) {
+            document.body.classList.remove("modal-open");
+        }
+    }
+
+    // Abrir
+    openButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            openModal(button.dataset.modalOpen);
+        });
+    });
+
+    // Cerrar
+    closeButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            closeModal(button.closest(".modal-overlay"));
+        });
+    });
+
+    // Cerrar al hacer clic fuera
+    modalOverlays.forEach(overlay => {
+        overlay.addEventListener("click", event => {
+            if (event.target === overlay) {
+                closeModal(overlay);
+            }
+        });
+    });
+
+    // Cambiar entre inicio de sesión y registro
+    document.querySelectorAll("[data-switch-modal]").forEach(button => {
+        button.addEventListener("click", () => {
+            openModal(button.dataset.switchModal);
+        });
+    });
+
+    // Cerrar con Escape
+    document.addEventListener("keydown", event => {
+
+        if (event.key === "Escape") {
+
+            const activeModal = document.querySelector(
+                ".modal-overlay.is-open"
             );
 
-            modal.setAttribute(
-                "aria-hidden",
-                "false"
-            );
+            if (activeModal) {
+                closeModal(activeModal);
+            }
+        }
+    });
 
+    // Formularios de demostración
+    document.querySelectorAll(".auth-form").forEach(form => {
 
-            document.body.classList.add(
-                "modal-open"
-            );
+        form.addEventListener("submit", event => {
 
+            event.preventDefault();
 
-            const firstInput =
-                modal.querySelector(
-                    "input"
-                );
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
 
+            const button = form.querySelector(".submit-button");
+
+            if (!button) return;
+
+            const original = button.innerHTML;
+
+            button.innerHTML = 'DEMO VISUAL <span>✓</span>';
+            button.disabled = true;
 
             setTimeout(() => {
+                button.innerHTML = original;
+                button.disabled = false;
+            }, 1500);
 
-                if (firstInput) {
-                    firstInput.focus();
-                }
+        });
 
-            }, 250);
-        }
+    });
+
+}
+
+// Inicializar autenticación
+initAuthModals();
 
 
         /* =====================================================
