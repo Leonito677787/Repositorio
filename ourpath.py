@@ -71,5 +71,19 @@ def home_admin():
 @login_required
 def home_user():
     return render_template('user.html')
-if __name__== '__main__':
-    ourpathApp.run(port=8787)
+
+@ourpathApp.route('/sUsuario', methods=['GET','POST'])
+@login_required
+def sUsuario():
+    if current_user.perfil == 'A':
+        selUsuario = db.connection.cursor()
+        selUsuario.execute("SELECT * FROM usuario")
+        u = selUsuario.fetchall()
+        selUsuario.close()
+        return render_template('users.html', usuarios = u)
+    else:
+        return render_template('home.html') 
+
+if __name__== '__main__':   
+    ourpathApp.run(port=8787) 
+
