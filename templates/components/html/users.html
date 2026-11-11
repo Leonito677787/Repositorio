@@ -2,6 +2,15 @@
 {% block titulo %} OurPath {% endblock %}
 {% block contenido  %}
     <div class="comtainer">
+        {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {for m in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{m}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
       <table class="table">
   <thead>
     <tr>
@@ -10,10 +19,12 @@
       <th scope="col">correo</th>
       <th scope="col">clave</th>
       <th scope="col">perfil</th>
-      <th scope="col" colspan="2">    <!-- Button insert modal -->
+      <th scope="col" colspan="2">    
+    <!-- Button insert modal -->
 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
  <i class="fa-solid fa-user-plus" style="color: rgb(124, 0, 0);"></i>
-</button></th>
+</button>
+</th>
 
     </tr>
 
@@ -26,7 +37,7 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="{{url_for('iUsuario')}}" method="POST">+
+      <form action="{{url_for('iUsuario')}}" method="POST">
       <div class="modal-body">
         <div class="form-grid">
 
@@ -107,6 +118,22 @@
 
                 </div>
 
+                <label for="registerPerfil">
+                    Perfil
+                </label>
+
+                <div class="input-shell">
+
+                    <span>◆</span>
+
+                    <select name="perfil" class="form-select" aria-label="Default select example">
+                    <option selected>Perfil</option>
+                    <option value="A">Administrador</option>
+                    <option value="U">Usuarios</option>
+                    </select>
+
+                </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -125,9 +152,131 @@
       <td>{{u[2]}}</td>
       <td>{{u[3]}}</td>
       <td>{{u[4]}}</td>
-      <td>boton editar</td>
+      <td>
+        <!-- Button update modal -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal{{u[0]}}">
+        <i class="fa-solid fa-user-plus" style="color: rgb(124, 0, 0);"></i>
+        </button></td>
+
       <td>boton eliminar</td>
     </tr>
+
+    <!-- Modal update -->
+    <div class="modal fade" id="updateModal{{u[0]}}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="updateModalLabel">Actualizar Usuario</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{{url_for('uUsuario',id=u[0])}}" method="POST">
+      <div class="modal-body">
+        <div class="form-grid">
+
+                    <div>
+
+                        <label for="registerName">
+                            Nombre
+                        </label>
+
+                        <div class="input-shell">
+
+                            <span>◈</span>
+
+                            <input
+                                id="registerName"
+                                name="nombre"
+                                value="{{u[1]}}"
+                                type="text"
+                                placeholder="Tu nombre"
+                                autocomplete="given-name">
+
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <label for="registerUser">
+                            Usuario
+                        </label>
+
+                        <div class="input-shell">
+
+                            <span>OP</span>
+
+                            <input
+                                id="registerUser"
+                                type="text"
+                                placeholder="@usuario"
+                                autocomplete="username">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <label for="registerEmail">
+                    Correo electrónico
+                </label>
+
+                <div class="input-shell">
+
+                    <span>@</span>
+
+                    <input
+                        id="registerEmail"
+                        type="email"
+                        placeholder="tu@email.com"
+                        autocomplete="email">
+
+                </div>
+
+
+                <label for="registerPassword">
+                    Contraseña
+                </label>
+
+                <div class="input-shell">
+
+                    <span>◆</span>
+
+                    <input
+                        id="registerPassword"
+                        type="password"
+                        placeholder="Crea una contraseña"
+                        autocomplete="new-password">
+
+                </div>
+
+                <label for="registerPerfil">
+                    Perfil
+                </label>
+
+                <div class="input-shell">
+
+                    <span>◆</span>
+
+                    <select name="perfil" class="form-select" aria-label="Default select example">
+                    <option selected>Perfil</option>
+                    <option value="A">Administrador</option>
+                    <option value="U">Usuarios</option>
+                    </select>
+
+                </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
     {% endfor %}
   </tbody>
 </table>  

@@ -599,56 +599,8 @@
         </section>
     </main>
 
-    <!-- FOOTER -->
-    <footer class="site-footer">
-        <div class="footer-main">
-            <div class="footer-brand">
-                <a class="brand" href="#inicio" aria-label="Our Path, inicio">
-                    <span class="brand-mark">OP</span>
-                    <span class="brand-name">Our Path</span>
-                </a>
+    {% include 'components/footer.html' %}
 
-                <p>
-                    Un archivo para recordar de dónde venimos
-                    y descubrir hacia dónde vamos.
-                </p>
-
-                <div class="footer-system">
-                    <span class="status-dot"></span>
-                    SYSTEM ONLINE / ARCHIVE ACTIVE
-                </div>
-            </div>
-
-            <div class="footer-column">
-                <h3>Explorar</h3>
-                <a href="#historia">Historia</a>
-                <a href="#archivo">Archivo</a>
-                <a href="#archivo">Consolas</a>
-                <a href="#archivo">Videojuegos</a>
-            </div>
-
-            <div class="footer-column">
-                <h3>Comunidad</h3>
-                <a href="#colecciones">Colecciones</a>
-                <a href="#marketplace">Marketplace</a>
-                <a href="#marketplace">Intercambios</a>
-                <a href="#comunidad">Comunidad</a>
-            </div>
-
-            <div class="footer-column">
-                <h3>Información</h3>
-                <a href="#inicio">Sobre Our Path</a>
-                <a href="#inicio">Contacto</a>
-                <a href="#inicio">Privacidad</a>
-                <a href="#inicio">Términos</a>
-            </div>
-        </div>
-
-        <div class="footer-bottom">
-            <span>© 2026 Our Path. Todos los derechos reservados.</span>
-            <span>BUILT FOR THE PATH / OP_001</span>
-        </div>
-    </footer>
     <!--MODAL — INICIAR SESIÓN-->
     <div
         class="modal-overlay"
@@ -694,8 +646,18 @@
                 action="{{url_for('signin')}}" 
                 method="post"
                 novalidate>
+           
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    {for m in messages %}
+                        <div class="alert alert-danger" role="alert">
+                            {{m}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                {% endwith %}
 
-                <label for="loginEmail">
+                <label  for="loginEmail">
                     Correo electrónico
                 </label>
 
@@ -705,7 +667,8 @@
 
                     <input
                         id="loginEmail"
-                        type="correo"
+                        type="email"
+                        name="correo"
                         placeholder="tu@email.com"
                         autocomplete="email">
 

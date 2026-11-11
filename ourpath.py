@@ -70,7 +70,7 @@ def home_admin():
 @ourpathApp.route('/home_user', methods=['GET','POST'])
 @login_required
 def home_user():
-    return render_template('user.html')
+    return render_template('home_user.html')
 
 @ourpathApp.route('/sUsuario', methods=['GET','POST'])
 @login_required
@@ -83,6 +83,53 @@ def sUsuario():
         return render_template('users.html', usuarios = u)
     else:
         return render_template('home.html') 
+
+@ourpathApp.route('/uUsuario/<int:id>', methods=['GET','POST'])
+@login_required
+def uUsuario(id):
+    if current_user.perfil == 'A':
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        perfil = request.form['perfil']
+        actUsuario = db.connection.cursor()
+        actUsuario.execute("UPDATE usuario SET nombre=%s, correo=%s, perfil=%s WHERE id=%s", (nombre, correo, perfil, id))
+        actUsuario.close()
+        flash('Registro actualizado correctamente')
+        return redirect(url_for('sUsuario'))
+    else:
+        return render_template('home.html')
+
+@ourpathApp.route('/iUsuario', methods=['GET','POST'])
+@login_required
+def iUsuario():
+    if current_user.perfil == 'A':
+        nombre = request.form['nombre']
+        correo = request.form['correo']
+        perfil = request.form['perfil']
+        clave = request.form['clave']
+        claveCifrada = generate_password_hash(clave)
+        regUsuario = db.connection.cursor()
+        regUsuario.execute("INSERT INTO usuario (nombre,correo,perfil,clave) VALUES (%s, %s, %s, %s)", (nombre,correo,perfil,claveCifrada))
+        db.connection.commit()
+        flash('Registro registrado satisfactoriamente ;)')
+        regUsuario.close()
+        return redirect(url_for('iUsuario'))
+    else:
+        return render_template('home.html')
+
+
+@ourpathApp.route('/dUsuario/<int:id>', methods=['GET','POST'])
+@login_required
+def dUsuario(id):
+    if current_user.perfil == 'A':
+        delUsuario = db.connection.cursor()
+        delUsuario.execute("DELETE FROM usuario WHERE id=%s", (id,))
+        db.connection.commit()
+        delUsuario.close()
+        flash('Registro eliminado correctamente')
+        return redirect(url_for('sUsuario'))
+    else:
+        return render_template('home.html')
 
 if __name__== '__main__':   
     ourpathApp.run(port=8787) 
