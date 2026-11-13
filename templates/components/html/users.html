@@ -20,9 +20,9 @@
       <th scope="col">clave</th>
       <th scope="col">perfil</th>
       <th scope="col" colspan="2">    
-    <!-- Button insert modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
- <i class="fa-solid fa-user-plus" style="color: rgb(124, 0, 0);"></i>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-op" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  <i class="fa-solid fa-user-plus me-2"></i>Registrar usuario
 </button>
 </th>
 
@@ -150,133 +150,161 @@
       <th scope="row">{{u[0]}}</th>
       <td>{{u[1]}}</td>
       <td>{{u[2]}}</td>
-      <td>{{u[3]}}</td>
+      <td>{{u[3]|truncate(20)}}</td>
       <td>{{u[4]}}</td>
       <td>
-        <!-- Button update modal -->
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#updateModal{{u[0]}}">
-        <i class="fa-solid fa-user-plus" style="color: rgb(124, 0, 0);"></i>
+        <!-- Button que abre el modal de edicion -->
+        <button type="button" class="btn btn-primary btn-op btn-op-edit" data-bs-toggle="modal" data-bs-target="#modalEditarUsuaio{{u[0]}}">
+        <i class="fa-solid fa-user-pen me-2"></i>Editar usuario
+        </button>
         </button></td>
 
-      <td>boton eliminar</td>
+      <td>
+        <!-- Button eliminar -->
+        <button type="button" class="btn btn-primary btn-op btn-op-danger" data-bs-toggle="modal" data-bs-target="#modalEliminarUsuario{{u[0]}}">
+        <i class="fa-solid fa-user-xmark me-2"></i>Eliminar usuario
+        </button>
+
+      </td>
     </tr>
 
-    <!-- Modal update -->
-    <div class="modal fade" id="updateModal{{u[0]}}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+    <!-- Modal editar -->
+<div class="modal fade op-modal op-modal-edit" id="modalEditarUsuario{{u[0]}}" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true" data-bs-theme="dark">
+  <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
+
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="updateModalLabel">Actualizar Usuario</h1>
+        <h1 class="modal-title fs-5" id="editUserModalLabel">
+          <i class="fa-solid fa-user-pen"></i>Editar usuario
+        </h1>
+        <span class="badge badge-id ms-auto me-3">ID #<span id="editIdLabel">1</span></span>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <form action="{{url_for('uUsuario',id=u[0])}}" method="POST">
-      <div class="modal-body">
-        <div class="form-grid">
 
-                    <div>
+      <form action="actualizar_usuario.php" action="{{url_for('dUsuario', id[0])}}" method="POST" enctype="multipart/form-data">
+        <div class="modal-body">
 
-                        <label for="registerName">
-                            Nombre
-                        </label>
+          <!-- id (oculto) -->
+          <input type="hidden" id="editId" name="id" value="1">
+          <!-- imagen actual (oculto) -->
+          <input type="hidden" name="imagen_actual" id="editImagenActual" value="usuario1.jpg">
 
-                        <div class="input-shell">
+          <!-- vista previa de la imagen actual -->
+          <div class="edit-avatar-wrap mb-4">
+            <img src="img/usuarios/usuario1.jpg" alt="Imagen actual del usuario" class="edit-avatar" id="editAvatar">
+            <div>
+              <span class="edit-avatar-label">Imagen actual</span>
+              <small class="d-block">Sube otra solo si deseas reemplazarla.</small>
+            </div>
+          </div>
 
-                            <span>◈</span>
+          <!-- nombre -->
+          <div class="mb-3">
+            <label for="editNombre" class="form-label">Nombre</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-signature"></i></span>
+              <input type="text" class="form-control" id="editNombre" name="nombre"
+                     value="{{u[1]}}" maxlength="150" required>
+            </div>
+          </div>
 
-                            <input
-                                id="registerName"
-                                name="nombre"
-                                value="{{u[1]}}"
-                                type="text"
-                                placeholder="Tu nombre"
-                                autocomplete="given-name">
+          <!-- correo -->
+          <div class="mb-3">
+            <label for="editCorreo" class="form-label">Correo</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+              <input type="email" class="form-control" id="editCorreo" name="correo"
+                     value="{{u[2]}}" maxlength="150" required>
+            </div>
+          </div>
 
-                        </div>
+          <!-- clave -->
+          <div class="mb-3">
+            <label for="editClave" class="form-label">Nueva clave</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+              <input type="password" class="form-control" id="editClave" name="clave"
+                     value="" maxlength="200" placeholder="Déjala vacía para conservar la actual">
+              <button class="btn btn-toggle-pass" type="button" id="toggleEditPass" aria-label="Mostrar u ocultar clave">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+          </div>
 
-                    </div>
+          <!-- perfil -->
+          <div class="mb-3">
+            <label for="editPerfil" class="form-label">Perfil</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="fa-solid fa-user-gear"></i></span>
+              <select class="form-select" id="editPerfil" name="perfil" required>
+                <option value="{{u[4]}}" selected>{{u[4]}}</option>
+                <option value="U">U - Usuario</option>
+                <option value="A">A - Administrador</option>
+                
+              </select>
+            </div>
+          </div>
 
+          <!-- imagen (reemplazo opcional) -->
+          <div class="mb-1">
+            <label for="editImagen" class="form-label">Reemplazar imagen</label>
+            <input type="file" class="form-control" id="editImagen" name="imagen" accept="image/*">
+            <div class="form-text">Opcional. JPG, PNG o WEBP. Máx. 2 MB.</div>
+          </div>
 
-                    <div>
+        </div>
 
-                        <label for="registerUser">
-                            Usuario
-                        </label>
-
-                        <div class="input-shell">
-
-                            <span>OP</span>
-
-                            <input
-                                id="registerUser"
-                                type="text"
-                                placeholder="@usuario"
-                                autocomplete="username">
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-
-                <label for="registerEmail">
-                    Correo electrónico
-                </label>
-
-                <div class="input-shell">
-
-                    <span>@</span>
-
-                    <input
-                        id="registerEmail"
-                        type="email"
-                        placeholder="tu@email.com"
-                        autocomplete="email">
-
-                </div>
-
-
-                <label for="registerPassword">
-                    Contraseña
-                </label>
-
-                <div class="input-shell">
-
-                    <span>◆</span>
-
-                    <input
-                        id="registerPassword"
-                        type="password"
-                        placeholder="Crea una contraseña"
-                        autocomplete="new-password">
-
-                </div>
-
-                <label for="registerPerfil">
-                    Perfil
-                </label>
-
-                <div class="input-shell">
-
-                    <span>◆</span>
-
-                    <select name="perfil" class="form-select" aria-label="Default select example">
-                    <option selected>Perfil</option>
-                    <option value="A">Administrador</option>
-                    <option value="U">Usuarios</option>
-                    </select>
-
-                </div>
-
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-op-secondary" data-bs-dismiss="modal">
+            <i class="fa-solid fa-ban me-2"></i>Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary btn-op btn-op-edit">
+            <i class="fa-solid fa-arrows-rotate me-2"></i>Actualizar datos
+          </button>
+        </div>
       </form>
+
     </div>
   </div>
 </div>
+
+     <!-- Modal eliminar -->
+<div class="modal fade op-modal op-modal-delete" id="modalEliminarUsuario" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true" data-bs-theme="dark">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="deleteUserModalLabel">
+          <i class="fa-solid fa-triangle-exclamation"></i>Eliminar usuario
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="delete-icon">
+          <i class="fa-solid fa-trash-can"></i>
+        </div>
+        <p class="delete-message">¿Seguro que quieres eliminar el usuario?: {{u[1]}}</p>
+      </div>
+
+      <form action="eliminar_usuario.php" action="{{url_for('dUsuario', id[0])}}" method="POST">
+        <!-- El id va en el footer para dejar el modal-body sin inputs -->
+        <input type="hidden" name="id" id="deleteId" value="1">
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-op-secondary" data-bs-dismiss="modal">
+            <i class="fa-solid fa-ban me-2"></i>Cancelar
+          </button>
+          <button type="submit" class="btn btn-primary btn-op btn-op-danger">
+            <i class="fa-solid fa-trash-can me-2"></i>Sí, eliminar
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
     {% endfor %}
   </tbody>
 </table>  

@@ -1545,3 +1545,283 @@ h2 {
         transform: none;
     }
 }
+
+/* =========================================================
+   MODAL — OUR PATH (sobre Bootstrap 5.3)
+   ========================================================= */
+
+.op-modal {
+    --bs-modal-bg: transparent;
+    --bs-modal-border-width: 0;
+}
+
+.op-modal .modal-content {
+    color: var(--text);
+    border: 1px solid rgba(241, 238, 233, .12);
+    border-radius: var(--radius);
+    background:
+        radial-gradient(circle at 90% 0%, rgba(65, 177, 0, .12), transparent 16rem),
+        linear-gradient(145deg, var(--color-dark), var(--color-secondary));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(18px);
+    overflow: hidden;
+}
+
+.op-modal .modal-backdrop,
+.modal-backdrop.show {
+    --bs-backdrop-bg: #000500;
+    --bs-backdrop-opacity: .72;
+}
+
+.op-modal .modal-header,
+.op-modal .modal-footer {
+    border-color: var(--line);
+    padding: 20px 26px;
+}
+
+.op-modal .modal-body {
+    padding: 26px;
+}
+
+.op-modal .modal-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+/* Labels */
+.op-modal .form-label {
+    margin-bottom: 6px;
+    color: var(--color-accent);
+    font-size: .7rem;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+
+/* Inputs */
+.op-modal .form-control,
+.op-modal .form-select,
+.op-modal .input-group-text {
+    color: var(--text);
+    background-color: rgba(0, 5, 0, .45);
+    border: 1px solid var(--line);
+}
+
+.op-modal .form-control,
+.op-modal .form-select {
+    min-height: 46px;
+    transition: border-color .25s ease, box-shadow .25s ease, background .25s ease;
+}
+
+.op-modal .form-control::placeholder {
+    color: rgba(241, 238, 233, .32);
+}
+
+.op-modal .form-control:focus,
+.op-modal .form-select:focus {
+    background-color: rgba(0, 5, 0, .65);
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 .2rem rgba(65, 177, 0, .18);
+}
+
+.op-modal .input-group-text {
+    min-width: 46px;
+    justify-content: center;
+    color: var(--color-accent);
+}
+
+.op-modal .input-group:focus-within .input-group-text {
+    border-color: var(--color-accent);
+}
+
+.op-modal .form-select option {
+    color: var(--text);
+    background: var(--color-dark);
+}
+
+/* Input file */
+.op-modal input[type="file"].form-control {
+    padding: 0;
+    cursor: pointer;
+}
+
+.op-modal input[type="file"]::file-selector-button {
+    height: 100%;
+    margin: 0 14px 0 0;
+    padding: 12px 18px;
+    border: 0;
+    border-right: 1px solid var(--line);
+    color: var(--text);
+    background: linear-gradient(135deg, var(--color-primary), #8e302e);
+    font-weight: 800;
+    cursor: pointer;
+    transition: filter .25s ease;
+}
+
+.op-modal input[type="file"]::file-selector-button:hover {
+    filter: brightness(1.15);
+}
+
+.op-modal .form-text {
+    color: rgba(241, 238, 233, .45);
+    font-family: monospace;
+    font-size: .68rem;
+}
+
+/* Botones */
+.btn-op,
+.btn-op-secondary,
+.btn-toggle-pass {
+    min-height: 46px;
+    font-weight: 800;
+    transition: transform .3s ease, background .3s ease, border-color .3s ease, box-shadow .3s ease;
+}
+
+.btn-op,
+.btn-op-secondary {
+    border-radius: 999px;
+    padding: 10px 22px;
+}
+
+.btn-op {
+    --bs-btn-color: var(--text);
+    --bs-btn-hover-color: var(--text);
+    --bs-btn-active-color: var(--text);
+    color: var(--text);
+    background: linear-gradient(135deg, var(--color-primary), #8e302e);
+    border: 1px solid rgba(195, 66, 63, .75);
+    box-shadow: 0 12px 30px rgba(195, 66, 63, .22);
+}
+
+.btn-op:hover,
+.btn-op:focus,
+.btn-op:active {
+    color: var(--text);
+    background: linear-gradient(135deg, #d44d49, #8e302e);
+    border-color: rgba(195, 66, 63, .9);
+    box-shadow: 0 16px 38px rgba(195, 66, 63, .35);
+    transform: translateY(-3px);
+}
+
+.btn-op-secondary {
+    color: var(--text);
+    background: rgba(9, 58, 62, .4);
+    border: 1px solid rgba(65, 177, 0, .22);
+}
+
+.btn-op-secondary:hover {
+    color: var(--text);
+    background: var(--color-secondary);
+    border-color: rgba(65, 177, 0, .55);
+    transform: translateY(-3px);
+}
+
+.btn-toggle-pass {
+    color: var(--color-accent);
+    background: rgba(0, 5, 0, .45);
+    border: 1px solid var(--line);
+}
+
+.btn-toggle-pass:hover {
+    color: var(--color-black);
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+/* Validación */
+.op-modal .form-control:invalid:not(:placeholder-shown):not(:focus) {
+    border-color: var(--color-primary);
+}
+/* =========================================================
+   MODAL ELIMINAR — variante
+   ========================================================= */
+
+.op-modal-delete .modal-content {
+    background:
+        radial-gradient(circle at 50% 0%, rgba(195, 66, 63, .28), transparent 18rem),
+        linear-gradient(145deg, var(--color-dark), #1a0f12);
+    border-color: rgba(195, 66, 63, .55);
+}
+
+.op-modal-delete .modal-content::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: repeating-linear-gradient(
+        135deg,
+        var(--color-primary) 0 12px,
+        var(--color-dark) 12px 24px
+    );
+}
+
+.op-modal-delete .modal-title i {
+    color: var(--color-primary);
+    animation: warn-pulse 1.8s ease-in-out infinite;
+}
+
+.op-modal-delete .modal-body {
+    padding: 34px 26px 30px;
+    text-align: center;
+}
+
+.delete-icon {
+    display: grid;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 22px;
+    place-items: center;
+    border: 1px solid rgba(195, 66, 63, .6);
+    border-radius: 50%;
+    color: var(--color-primary);
+    background: rgba(195, 66, 63, .12);
+    font-size: 2rem;
+    box-shadow: 0 0 30px rgba(195, 66, 63, .3), inset 0 0 18px rgba(195, 66, 63, .15);
+}
+
+.delete-message {
+    max-width: 320px;
+    margin: 0 auto;
+    color: var(--text);
+    font-size: 1.15rem;
+    font-weight: 700;
+    line-height: 1.4;
+}
+
+/* Botón peligro */
+.btn-op-danger {
+    color: var(--text);
+    background: linear-gradient(135deg, #d6403c, #7a1f1d);
+    border-color: rgba(214, 64, 60, .8);
+    box-shadow: 0 12px 30px rgba(195, 66, 63, .28);
+}
+
+.btn-op-danger:hover,
+.btn-op-danger:focus,
+.btn-op-danger:active {
+    color: var(--text);
+    background: linear-gradient(135deg, #ee4d49, #8e2624);
+    border-color: #ee4d49;
+    box-shadow: 0 16px 40px rgba(238, 77, 73, .42);
+}
+
+.op-modal-delete .modal-footer {
+    justify-content: center;
+}
+
+@keyframes warn-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: .55; transform: scale(1.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .op-modal-delete .modal-title i {
+        animation: none;
+    }
+}

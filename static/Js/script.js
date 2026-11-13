@@ -557,3 +557,42 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 });
+  // Mostrar / ocultar clave
+  document.getElementById('toggleEditPass').addEventListener('click', function () {
+    const input = document.getElementById('editClave');
+    const icon = this.querySelector('i');
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    icon.classList.toggle('fa-eye', !show);
+    icon.classList.toggle('fa-eye-slash', show);
+  });
+
+  // Rellenar el modal al abrirlo desde un botón con data-*
+  // Ejemplo de botón:
+  // <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#editUserModal"
+  //   data-id="5" data-nombre="Ana" data-correo="ana@mail.com" data-perfil="A" data-imagen="ana.jpg">Editar</button>
+  document.getElementById('editUserModal').addEventListener('show.bs.modal', function (e) {
+    const b = e.relatedTarget;
+    if (!b || !b.dataset.id) return;
+
+    document.getElementById('editId').value = b.dataset.id;
+    document.getElementById('editIdLabel').textContent = b.dataset.id;
+    document.getElementById('editNombre').value = b.dataset.nombre;
+    document.getElementById('editCorreo').value = b.dataset.correo;
+    document.getElementById('editPerfil').value = b.dataset.perfil;
+    document.getElementById('editImagenActual').value = b.dataset.imagen;
+    document.getElementById('editAvatar').src = 'img/usuarios/' + b.dataset.imagen;
+    document.getElementById('editClave').value = '';
+  });
+
+  
+  // Ejemplo de botón en la tabla de usuarios:
+  // <button class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#deleteUserModal" data-id="5">Eliminar</button>
+  document.getElementById('deleteUserModal').addEventListener('show.bs.modal', function (e) {
+    const b = e.relatedTarget;
+    if (b && b.dataset.id) {
+      document.getElementById('deleteId').value = b.dataset.id;
+    }
+  });
+
+

@@ -65,7 +65,7 @@ def signout():
 @ourpathApp.route('/home_admin', methods=['GET','POST'])
 @login_required
 def home_admin():
-    return render_template('admin.html')
+    return render_template('home_admin.html')
 
 @ourpathApp.route('/home_user', methods=['GET','POST'])
 @login_required
